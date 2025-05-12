@@ -1,3 +1,7 @@
+⚠️ This is a fork that serves as frontend for a Uniswap app in Nomos. It includes minor customizations and fixes so it flows better for this particular use case.
+
+---
+
 # NOTE: This is a proof-of-concept. Use it at your own risk, and it's not intended for any sort of production use.
 
 This is an alternative interface to Uniswap V2 contracts deployed on an EVM blockchain. We used ReactJS for the project, with the EthersJS module to connect to the blockchain via metamask in the browser, and Material-UI for the frontend. As it was a static site, we used github pages to host the application.
