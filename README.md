@@ -1,4 +1,27 @@
-⚠️ This is a fork that serves as frontend for a Uniswap app in Nomos. It includes minor customizations and fixes so it flows better for this particular use case.
+⚠️ This is a fork that serves as the frontend for a Uniswap app in Nomos. It includes minor customizations and fixes to better suit this particular use case.
+
+### Pre-requisites
+
+This fork requires a fully deployed Uniswap instance and two custom tokens to be available on the chain.
+That information must be provided via an `.env` file (already present in the repository, albeit with placeholder values) or through environment variables:
+```
+REACT_APP_NOMISWAP_ROUTER_ADDRESS=0x0
+REACT_APP_NOMISWAP_TOKEN_NMO_ADDRESS=0x1  # (Stand-in for NOMOS)
+REACT_APP_NOMISWAP_TOKEN_MEM_ADDRESS=0x2  # (Stand-in for MEHMET)
+```
+
+### Running
+
+To run the app simply install the dependencies with `yarn install` and then run `yarn start`.
+
+### Troubleshooting
+
+- If the web app doesn't load (e.g., the screen stays white), it's likely due to incorrect address values. You can usually gather more information by opening your browser's developer console.
+- If issues persist, please open an [Issue](https://github.com/logos-co/nomos-example-uniswap).
+
+---
+
+### 📄 Original README Below
 
 ---
 
