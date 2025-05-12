@@ -278,7 +278,7 @@ function CoinSwapper(props) {
           props.network.signer,
           props.network.weth.address,
           props.network.coins
-          ).then(
+        ).then(
           (data) => {
             setCoin1({
               ...coin1,
@@ -295,7 +295,7 @@ function CoinSwapper(props) {
           props.network.signer,
           props.network.weth.address,
           props.network.coins
-          ).then(
+        ).then(
           (data) => {
             setCoin2({
               ...coin2,
@@ -326,7 +326,7 @@ function CoinSwapper(props) {
       />
       <WrongNetwork
         open={wrongNetworkOpen}
-        />
+      />
 
       {/* Coin Swapper */}
       <Container maxWidth="xs">
@@ -416,10 +416,6 @@ function CoinSwapper(props) {
         justifyContent="center"
         alignItems="flex-end"
       >
-        <p>
-        Alternative Uniswap Interface | Get AUT for use in the bakerloo testnet{" "}
-          <a href="https://faucet.bakerloo.autonity.network/">here</a>
-        </p>
       </Grid>
     </div>
   );
