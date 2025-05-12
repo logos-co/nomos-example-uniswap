@@ -61,12 +61,12 @@ export function doesTokenExist(address, signer) {
 
 export async function getDecimals(token) {
   const decimals = await token.decimals().then((result) => {
-      return result;
-    }).catch((error) => {
-      console.log('No tokenDecimals function for this token, set to 0');
-      return 0;
-    });
-    return decimals;
+    return result;
+  }).catch((error) => {
+    console.log('No tokenDecimals function for this token, set to 0');
+    return 0;
+  });
+  return decimals;
 }
 
 // This function returns an object with 2 fields: `balance` which container's the account's balance in the particular token,
@@ -132,42 +132,47 @@ export async function swapTokens(
 
   const token1 = new Contract(address1, ERC20.abi, signer);
   const tokenDecimals = await getDecimals(token1);
-  
+
   const amountIn = ethers.utils.parseUnits(amount, tokenDecimals);
   const amountOut = await routerContract.callStatic.getAmountsOut(
     amountIn,
     tokens
   );
 
-  await token1.approve(routerContract.address, amountIn);
+  const tx_approve = await token1.approve(routerContract.address, amountIn);
+  await tx_approve.wait();
+
   const wethAddress = await routerContract.WETH();
 
   if (address1 === wethAddress) {
     // Eth -> Token
-    await routerContract.swapExactETHForTokens(
+    const tx_swapExactETHForTokens = await routerContract.swapExactETHForTokens(
       amountOut[1],
       tokens,
       accountAddress,
       deadline,
       { value: amountIn }
     );
+    await tx_swapExactETHForTokens.wait();
   } else if (address2 === wethAddress) {
     // Token -> Eth
-    await routerContract.swapExactTokensForETH(
+    const tx_swapExactTokensForETH = await routerContract.swapExactTokensForETH(
       amountIn,
       amountOut[1],
       tokens,
       accountAddress,
       deadline
     );
+    await tx_swapExactTokensForETH.wait();
   } else {
-    await routerContract.swapExactTokensForTokens(
+    const tx_swapExactTokensForTokens = await routerContract.swapExactTokensForTokens(
       amountIn,
       amountOut[1],
       tokens,
       accountAddress,
       deadline
     );
+    await tx_swapExactTokensForTokens.wait();
   }
 }
 
@@ -255,15 +260,15 @@ export async function getReserves(
   try {
     const pairAddress = await factory.getPair(address1, address2);
     const pair = new Contract(pairAddress, PAIR.abi, signer);
-  
+
     if (pairAddress !== '0x0000000000000000000000000000000000000000'){
-  
+
       const reservesRaw = await fetchReserves(address1, address2, pair, signer);
       const liquidityTokens_BN = await pair.balanceOf(accountAddress);
       const liquidityTokens = Number(
         ethers.utils.formatEther(liquidityTokens_BN)
       );
-    
+
       return [
         reservesRaw[0].toPrecision(6),
         reservesRaw[1].toPrecision(6),
